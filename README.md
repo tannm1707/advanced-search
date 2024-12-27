@@ -97,3 +97,205 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+---
+
+# Product Management API
+
+## Overview
+
+This API allows you to manage products with basic CRUD operations, including the ability to get total and average reports. The product structure includes a `name`, `description`, `price`, and `category`.
+
+## Product Structure
+
+The product structure is as follows:
+
+```json
+{
+  "name": "Mechanical Keyboard",
+  "description": "Durable keyboard for typing and gaming",
+  "price": 100,
+  "category": "Accessories"
+}
+```
+
+## Endpoints
+
+### 1. **Create Product**
+
+- **URL**: `/products`
+- **Method**: `POST`
+- **Description**: Create a new product.
+- **Request Body**:
+
+```json
+{
+  "name": "Mechanical Keyboard",
+  "description": "Durable keyboard for typing and gaming",
+  "price": 100,
+  "category": "Accessories"
+}
+```
+- **Response**:
+
+```json
+{
+  "data":
+    {
+    "name": "Mechanical Keyboard",
+    "description": "Durable keyboard for typing and gaming",
+    "price": 100,
+    "category": "Accessories"
+    }
+}
+```
+### 2. **Bulk Create Products**
+
+- **URL**: `/products/bulk-create`
+- **Method**: `POST`
+- **Description**: Create multiple new product.
+- **Request Body**:
+
+```json
+{
+    "products": [
+        {
+            "name": "Laptop Pro",
+            "description": "High-performance laptop for professionals",
+            "price": 1500,
+            "category": "Electronics"
+        },
+        {
+            "name": "Smartphone X",
+            "description": "Latest smartphone with advanced features",
+            "price": 1000,
+            "category": "Electronics"
+        },
+        {
+            "name": "Gaming Chair",
+            "description": "Comfortable chair for gaming enthusiasts",
+            "price": 300,
+            "category": "Furniture"
+        },
+        {
+            "name": "Wireless Earbuds",
+            "description": "Compact and high-quality audio device",
+            "price": 150,
+            "category": "Accessories"
+        },
+        {
+            "name": "Mechanical Keyboard",
+            "description": "Durable keyboard for typing and gaming",
+            "price": 100,
+            "category": "Accessories"
+        }
+    ]
+}
+```
+- **Response**:
+
+```json
+{
+    "products": [
+        {
+            "name": "Laptop Pro",
+            "description": "High-performance laptop for professionals",
+            "price": 1500,
+            "category": "Electronics"
+        },
+        {
+            "name": "Smartphone X",
+            "description": "Latest smartphone with advanced features",
+            "price": 1000,
+            "category": "Electronics"
+        },
+        {
+            "name": "Gaming Chair",
+            "description": "Comfortable chair for gaming enthusiasts",
+            "price": 300,
+            "category": "Furniture"
+        },
+        {
+            "name": "Wireless Earbuds",
+            "description": "Compact and high-quality audio device",
+            "price": 150,
+            "category": "Accessories"
+        },
+        {
+            "name": "Mechanical Keyboard",
+            "description": "Durable keyboard for typing and gaming",
+            "price": 100,
+            "category": "Accessories"
+        }
+    ]
+}
+```
+
+### 3. Get All Products
+
+#### **Endpoint**: `GET /products`
+
+Retrieve a list of all products, with optional filtering, sorting, and pagination.
+
+#### **Query Parameters**:
+
+| **Parameter**   | **Type**    | **Description**                                                | **Default Value**   | **Required** |
+|-----------------|-------------|----------------------------------------------------------------|---------------------|--------------|
+| `name`          | `string`    | Filter by item name                                            | -                   | No           |
+| `page`          | `integer`   | Current page for pagination                                    | 1                   | No           |
+| `limit`         | `integer`   | Number of items per page                                       | 10                  | No           |
+| `minPrice`      | `integer`   | Minimum price for filtering                                    | -                   | No           |
+| `maxPrice`      | `integer`   | Maximum price for filtering                                    | -                   | No           |
+| `category`      | `string`    | Filter by item category                                        | -                   | No           |
+| `sortBy`        | `string`    | Field by which to sort the items (`name`, `category`, `price`) | `name`            | No           |
+| `sortOrder`     | `string`    | Sort order of the items (`asc`, `desc`)                        | `asc`               | No           |
+
+#### **Response**:
+
+A paginated list of products based on the provided query parameters.
+
+##### **Success Response**:
+
+- **Code**: `200 OK`
+- **Content**:
+
+```json
+{
+  "page": 1,
+  "limit": 10,
+  "total": 100,
+  "data": [
+    {
+      "name": "Mechanical Keyboard",
+      "description": "Durable keyboard for typing and gaming",
+      "price": 100,
+      "category": "Accessories"
+    },
+    {
+      "name": "Gaming Mouse",
+      "description": "Precision mouse for gaming",
+      "price": 50,
+      "category": "Accessories"
+    },
+    ...
+  ]
+}
+```
+
+##### **Error Response**:
+
+- **Code**: `200 OK`
+- **Content**:
+```json
+{
+  "statusCode": 400,
+  "message": "Invalid query parameters",
+  "error": "Bad Request"
+}
+```
+
+```bash
+GET /products?page=1&limit=10&category=Accessories&sortBy=price&sortOrder=asc
+```
+

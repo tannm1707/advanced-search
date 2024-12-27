@@ -75,4 +75,31 @@ export class ElasticsearchServiceWrapper {
       }
     }
   }
+
+  async bulkIndex(documents: any[]) {
+    try {
+      const body = documents.flatMap(doc => {
+        const { _id, ...docWithoutId } = doc;
+        
+        return [
+          { index: { _index: this.index, _id: _id } }, 
+          docWithoutId,
+        ];
+      });
+      const bulkResponse = await this.esService.bulk({
+        refresh: true,
+        body,
+      });
+      if (bulkResponse.errors) {
+        const errorItems = bulkResponse.items.filter(item => item.index?.error);
+        throw new Error(`Error indexing documents: ${JSON.stringify(errorItems)}`);
+      }
+
+      console.log('Bulk indexing response:', bulkResponse);
+      return bulkResponse;
+    } catch (error) {
+      console.error('Elasticsearch Bulk Indexing Error:', error.meta?.body || error);
+      throw error;
+    }
+  }
 }

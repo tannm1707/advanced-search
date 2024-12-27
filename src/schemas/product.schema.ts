@@ -16,6 +16,9 @@ export class Product {
 
   @Prop()
   category: string;
+
+  @Prop()
+  count: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

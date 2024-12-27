@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
 
 export class CreateProductDto {
   @IsString()
@@ -21,4 +21,11 @@ export class CreateProductDto {
   @IsNotEmpty()
   @ApiProperty({ description: "Product Category", required: true})
   category: string;
+}
+
+export class BulkCreateProductDto {
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty({ description: "Product Array", required: true})
+  products: CreateProductDto[];
 }

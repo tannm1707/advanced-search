@@ -4,13 +4,9 @@ services:
     image: mongo:latest
     container_name: mongodb
     environment:
-      - MONGO_REPLICA_SET_NAME=rs0
-      - MONGO_REPLICAS="mongodb:27017"
-      - MONGO_REPLICA_SET_MEMBERS="[{'_id':0,'host':'mongodb:27017','priority':1}]"
       - MONGO_INITDB_DISABLE_AUTH=true
     ports:
       - "27017:27017"
-    command: ["--replSet", "rs0", "--bind_ip_all"]
     volumes:
       - mongodb:/data/db
     networks:
@@ -25,6 +21,8 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - xpack.security.enabled=false
+      - xpack.security.authc.apiKey.enabled=false
+      - ELASTIC_PASSWORD=12345
     ports:
       - "9200:9200"
     networks:
@@ -36,6 +34,8 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:8.17.0
     container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9200/"
     ports:
       - "5601:5601"  # HTTP port for Kibana
     depends_on:

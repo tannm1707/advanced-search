@@ -181,4 +181,21 @@ export class ProductService {
 
     return `Successfully deleting product with ID ${id}`;
   }
+
+  async bulkCreate(products: CreateProductDto[]): Promise<any> {
+    try {
+      const createdProducts = await this.productModel.insertMany(products);
+      const docsForElasticSearch = createdProducts.map(product => ({
+        _id: product._id.toString(),
+        name: product.name,
+        description: product.description,
+        category: product.category,
+        price: product.price,
+      }));
+      const bulkResponse = await this.esService.bulkIndex(docsForElasticSearch);
+      return { "products": createdProducts};
+    } catch (error) {
+      throw new Error('Error while creating and indexing products: ' + error.message);
+    }
+  }
 }

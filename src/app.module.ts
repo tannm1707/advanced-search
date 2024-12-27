@@ -1,14 +1,13 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { MongooseModule } from "@nestjs/mongoose";
 import { EnvConfigModule } from "./config/env.config";
 import { ProductModule } from "./product/product.module";
 import { DatabaseConfigModule } from "./config/database.config";
 import { ElasticsearchServiceWrapper } from "./modules/elasticsearch/elasticsearch.service";
 import { ElasticsearchModule } from "./modules/elasticsearch/elasticsearch.module";
+import { ReportModule } from "./modules/report/report.module";
 @Module({
-  imports: [EnvConfigModule, ProductModule, DatabaseConfigModule, ElasticsearchModule],
+  imports: [EnvConfigModule, ProductModule, DatabaseConfigModule, ElasticsearchModule, ReportModule],
   controllers: [],
   providers: [AppService],
 })

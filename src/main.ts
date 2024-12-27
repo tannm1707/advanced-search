@@ -17,7 +17,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
   .setTitle('Bonboncar - Test Crud')
   .setDescription('The API documentation for Bonboncar - Test Crud')
-  .setVersion('1.0')
+  .setVersion('1.1')
   .build();
 
 const document = SwaggerModule.createDocument(app, config);
