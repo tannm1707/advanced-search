@@ -251,6 +251,11 @@ Retrieve a list of all products, with optional filtering, sorting, and paginatio
 | `sortBy`        | `string`    | Field by which to sort the items (`name`, `category`, `price`) | `name`            | No           |
 | `sortOrder`     | `string`    | Sort order of the items (`asc`, `desc`)                        | `asc`               | No           |
 
+##### **Rquest Example**:
+```bash
+GET /products?page=1&limit=10&category=Accessories&sortBy=price&sortOrder=asc
+```
+
 #### **Response**:
 
 A paginated list of products based on the provided query parameters.
@@ -295,7 +300,183 @@ A paginated list of products based on the provided query parameters.
 }
 ```
 
-```bash
-GET /products?page=1&limit=10&category=Accessories&sortBy=price&sortOrder=asc
+### 4. **Get Product by id**
+
+- **URL**: `/products/:id`
+- **Method**: `GET`
+- **Description**: Get a product by its id.
+- **Response**:
+
+```json
+{
+  "data":
+    {
+      "id": "1",
+      "name": "Mechanical Keyboard",
+      "description": "Durable keyboard for typing and gaming",
+      "price": 100,
+      "category": "Accessories"
+    }
+}
 ```
 
+### 5. **Update Product**
+
+- **URL**: `/products/:id`
+- **Method**: `PATCH`
+- **Description**: Update the details of an existing product.
+- **Request Body**:
+
+```json
+{
+  "name": "Updated Keyboard Name",
+  "price": 120
+}
+```
+##### **Success Response**:
+
+- Code: 200 OK
+- Content:
+```json
+{
+  "data":
+    {
+      "id": "1",
+      "name": "Mechanical Keyboard",
+      "description": "Durable keyboard for typing and gaming",
+      "price": 100,
+      "category": "Accessories"
+    }
+}
+```
+### 6. **Delete Product**
+- **URL**: `/products/:id`
+- **Method**: `DELETE`
+- **Description**: Delete a product by its id.
+- **Request Body**:
+Endpoint: DELETE /products/:id
+Delete a product by its ID.
+
+##### **Success Response**:
+- Code: 200 OK
+- Content:
+```json
+{
+    "response": "Successfully deleting product with ID 676e581573836df47bc1ef03"
+}
+```
+### 7. Get Total Report
+
+Retrieve the total count of products, optionally filtered by category.
+
+#### Endpoint
+
+- **GET** `/api/v1/report/total`
+
+#### Query Parameters
+
+| Parameter | Type   | Required | Description                       |
+|-----------|--------|----------|-----------------------------------|
+| category  | string | No       | Filter by product category.       |
+
+#### Request Example
+
+```http
+GET /api/v1/products/report/total?category=Accessories
+```
+
+##### **Success Response**:
+- **Status Code**: 200 OK
+- **Body**:
+```json
+{
+  "count": 50,
+  "category": "Accessories"
+}
+```
+
+### 8. Get Average Report
+
+Retrieve the average price of products in each category along with the count of products.
+
+#### Endpoint
+
+- **GET** `/api/v1/report/average`
+
+#### Request Example
+
+```http
+GET /api/v1/products/report/average
+```
+##### **Success Response**:
+- **Status Code**: 200 OK
+- **Body**:
+```json
+[
+  {
+    "category": "Accessories",
+    "averagePrice": 50,
+    "count": 10
+  },
+  {
+    "category": "Electronics",
+    "averagePrice": 300,
+    "count": 20
+  }
+]
+```
+
+## How to Run with Docker Compose
+
+### Prerequisites
+
+- Install **Docker** and **Docker Compose** on your system.
+- Ensure ports `3000` (app), `9200` (Elasticsearch), and `27017` (MongoDB) are available.
+
+---
+
+### Steps to Run the Application
+
+1. **Clone the Repository**:
+
+```bash
+git clone <repository_url>
+cd <repository_name>
+```
+
+2. **Set Up Environment Variable**:
+- Create an .env file in the project root and provide the necessary environment variables. Example:
+
+```env
+APP_PORT=3000
+DB_NAME=bonboncar
+MONGODB_URI=mongodb://localhost:27017/
+DB_USERNAME=root
+DB_PASSWORD=12345
+API_BASE_PATH=api
+API_VERSION_PREFIX=v1
+```
+3. **Run Docker Compose**:
+- Build and start the containers:
+
+```bash
+docker-compose up --build
+```
+
+4. **Access the Application**:
+
+- API: Navigate to http://localhost:3000/api/v1 for the API.
+- Swagger UI: Navigate to http://localhost:3000/api for API documentation.
+- Elasticsearch: Navigate to http://localhost:9200.
+- Kibana: Navigate to http://localhost:5601.
+
+
+## Example Docker Compose Commands
+- Run the services with build:
+```bash
+docker-compose up --build -d
+```
+- Stop the running containers:
+```bash
+docker-compose down
+```
