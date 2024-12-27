@@ -1,0 +1,26 @@
+direct-read-namespaces = ["bonboncar.products"]
+mongo-url = "mongodb://mongodb:27017/?replicaSet=rs0"
+elasticsearch-url = ["http://elasticsearch:9200/"]
+exit-after-direct-reads = false
+change-stream-namespaces = ["bonboncar.products"]
+gzip = true
+stats = false
+index-stats = false
+elasticsearch-max-conns = 10
+dropped-collections = true
+dropped-databases = true
+replay = false
+resume = true
+resume-write-unsafe = false
+resume-name = "default"
+resume-strategy = 1
+verbose = false
+
+[[mapping]]
+namespace = "bonboncar.products"
+index = "products" 
+[logs]
+error = "./logs/error.log"
+info = "./logs/info.log"
+warn = "./logs/info.log"
+trace = "./logs/trace.log"

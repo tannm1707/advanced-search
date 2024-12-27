@@ -4,25 +4,35 @@ services:
     image: mongo:latest
     container_name: mongodb
     environment:
+      - MONGO_REPLICA_SET_NAME=rs0
+      - MONGO_REPLICAS="mongodb:27017"
+      - MONGO_REPLICA_SET_MEMBERS="[{'_id':0,'host':'mongodb:27017','priority':1}]"
       - MONGO_INITDB_DISABLE_AUTH=true
     ports:
       - "27017:27017"
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - es-net
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
     container_name: elasticsearch
     environment:
+      - discovery.type=single-node
       - node.name=elasticsearch
       - cluster.name=datasearch
       - bootstrap.memory_lock=true
-      - cluster.initial_master_nodes=elasticsearch
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
     ports:
       - "9200:9200"
     networks:
       - es-net
     volumes:
       - esdata:/usr/share/elasticsearch/data
-    mem_limit: 2g
+      - ./logs/elasticsearch:/var/log/elasticsearch
+    mem_limit: 4g
   kibana:
     image: docker.elastic.co/kibana/kibana:8.17.0
     container_name: kibana
@@ -30,13 +40,43 @@ services:
       - "5601:5601"  # HTTP port for Kibana
     depends_on:
       - elasticsearch
+    restart: always
     networks:
       - es-net
-
+  app:
+    container_name: advanced-search-bonboncar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URI: "mongodb://mongodb:27017/"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200/"
+    depends_on:
+      - elasticsearch
+      - mongodb
+    restart: always
+    networks:
+      - es-net
+  # monstache:
+  #   image: rwynn/monstache:6.7.2
+  #   container_name: oc_monstache
+  #   environment:
+  #     MONSTACHE_MONGO_URL: "mongodb://mongodb:27017/?replicaSet=rs0&connect=direct"
+  #     MONSTACHE_ES_URLS: "http://elasticsearch:9200/"
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - elasticsearch
+  #     - mongodb
+  #   restart: unless-stopped
+  #   networks:
+  #     - es-net
 volumes:
   esdata:
     driver: local
-
+  mongodb:
 networks:
   es-net:
     driver: bridge
