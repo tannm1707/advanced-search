@@ -1,6 +1,5 @@
 direct-read-namespaces = ["bonboncar.products"]
 exit-after-direct-reads = false
-change-stream-namespaces = ["bonboncar.products"]
 gzip = true
 stats = false
 index-stats = false
@@ -16,7 +15,7 @@ verbose = false
 
 [[mapping]]
 namespace = "bonboncar.products"
-index = "products" 
+index = "products"
 [logs]
 error = "./logs/error.log"
 info = "./logs/info.log"

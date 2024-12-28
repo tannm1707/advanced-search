@@ -29,4 +29,18 @@ export class ReportController {
     );
     res.json({data});
   }
+
+  @Get('price')
+  @ApiQuery({ name: 'category', required: false, description: 'Optional category to filter products', })
+  async getReportByPrice(@Query() query: GetTotalReportDto,@Res() res: Response) {
+    const result =  await this.reportService.getReportByPrice(
+      query.category
+    );
+    var data = {};
+    if(query.category){
+      data['category'] = query.category;
+    }
+    data['products'] = result;
+    res.json({data});
+  }
 }

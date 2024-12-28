@@ -62,20 +62,26 @@ export class ElasticsearchServiceWrapper {
     }
   }
 
-  async createIndex(index: string, mappings: any) {
+  async createIndex(index: string, mappings: any): Promise<void> {
     try {
-      await this.esService.indices.create({
-        index,
-        body: { mappings },
-      });
-      
-    } catch (error) {
-      if (error.meta?.body?.error?.type !== 'resource_already_exists_exception') {
-        throw error;
+      const exists = await this.esService.indices.exists({ index });
+
+      if (!exists) {
+        await this.esService.indices.create({
+          index,
+          body: {
+            mappings,
+          },
+        });
+        console.log(`Index '${index}' created.`);
+      } else {
+        console.log(`Index '${index}' already exists.`);
       }
+    } catch (error) {
+      console.error('Error creating index:', error);
+      throw new Error(`Error creating index: ${error.message}`);
     }
   }
-
   async bulkIndex(documents: any[]) {
     try {
       const body = documents.flatMap(doc => {

@@ -5,7 +5,7 @@ import { ElasticsearchServiceWrapper } from './elasticsearch.service';
 @Module({
   imports: [
     ESModule.register({
-      node: 'http://localhost:9200/', // Replace with your Elasticsearch URL
+      node: 'http://elasticsearch:9200/', // Replace with your Elasticsearch URL
     }),
   ],
   providers: [ElasticsearchServiceWrapper],

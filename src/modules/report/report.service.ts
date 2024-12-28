@@ -86,4 +86,19 @@ export class ReportService {
 
     return aggregationResult;
   }
+
+  async getReportByPrice(category?: string): Promise<{ highest: Product; lowest: Product }> {
+    const filter = category ? { category } : {};
+
+    const [highest, lowest] = await Promise.all([
+      this.productModel.findOne(filter).sort({ price: -1 }).exec(),
+      this.productModel.findOne(filter).sort({ price: 1 }).exec(),
+    ]);
+
+    if (!highest || !lowest) {
+      throw new NotFoundException('No products found matching the criteria.');
+    }
+
+    return { highest, lowest };
+  }
 }

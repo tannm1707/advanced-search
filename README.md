@@ -1,3 +1,17 @@
+# Task Checklist
+
+**Done**:
+
+- API Crud
+- Searching Product with Elasticsearch
+- Sync Post, Update, Delete in CRUD with Elasticsearch indexing
+- Creating API Swagger Document
+- Data report: Total product report, Average price report
+  **Not Done**:
+- Sync data from MongoDB to Elasticsearch ( tried using monstache but still cannot make it work )
+
+---
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -98,7 +112,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
-
 ---
 
 # Product Management API
@@ -137,19 +150,20 @@ The product structure is as follows:
   "category": "Accessories"
 }
 ```
+
 - **Response**:
 
 ```json
 {
-  "data":
-    {
+  "data": {
     "name": "Mechanical Keyboard",
     "description": "Durable keyboard for typing and gaming",
     "price": 100,
     "category": "Accessories"
-    }
+  }
 }
 ```
+
 ### 2. **Bulk Create Products**
 
 - **URL**: `/products/bulk-create`
@@ -159,76 +173,77 @@ The product structure is as follows:
 
 ```json
 {
-    "products": [
-        {
-            "name": "Laptop Pro",
-            "description": "High-performance laptop for professionals",
-            "price": 1500,
-            "category": "Electronics"
-        },
-        {
-            "name": "Smartphone X",
-            "description": "Latest smartphone with advanced features",
-            "price": 1000,
-            "category": "Electronics"
-        },
-        {
-            "name": "Gaming Chair",
-            "description": "Comfortable chair for gaming enthusiasts",
-            "price": 300,
-            "category": "Furniture"
-        },
-        {
-            "name": "Wireless Earbuds",
-            "description": "Compact and high-quality audio device",
-            "price": 150,
-            "category": "Accessories"
-        },
-        {
-            "name": "Mechanical Keyboard",
-            "description": "Durable keyboard for typing and gaming",
-            "price": 100,
-            "category": "Accessories"
-        }
-    ]
+  "products": [
+    {
+      "name": "Laptop Pro",
+      "description": "High-performance laptop for professionals",
+      "price": 1500,
+      "category": "Electronics"
+    },
+    {
+      "name": "Smartphone X",
+      "description": "Latest smartphone with advanced features",
+      "price": 1000,
+      "category": "Electronics"
+    },
+    {
+      "name": "Gaming Chair",
+      "description": "Comfortable chair for gaming enthusiasts",
+      "price": 300,
+      "category": "Furniture"
+    },
+    {
+      "name": "Wireless Earbuds",
+      "description": "Compact and high-quality audio device",
+      "price": 150,
+      "category": "Accessories"
+    },
+    {
+      "name": "Mechanical Keyboard",
+      "description": "Durable keyboard for typing and gaming",
+      "price": 100,
+      "category": "Accessories"
+    }
+  ]
 }
 ```
+
 - **Response**:
 
 ```json
 {
-    "products": [
-        {
-            "name": "Laptop Pro",
-            "description": "High-performance laptop for professionals",
-            "price": 1500,
-            "category": "Electronics"
-        },
-        {
-            "name": "Smartphone X",
-            "description": "Latest smartphone with advanced features",
-            "price": 1000,
-            "category": "Electronics"
-        },
-        {
-            "name": "Gaming Chair",
-            "description": "Comfortable chair for gaming enthusiasts",
-            "price": 300,
-            "category": "Furniture"
-        },
-        {
-            "name": "Wireless Earbuds",
-            "description": "Compact and high-quality audio device",
-            "price": 150,
-            "category": "Accessories"
-        },
-        {
-            "name": "Mechanical Keyboard",
-            "description": "Durable keyboard for typing and gaming",
-            "price": 100,
-            "category": "Accessories"
-        }
-    ]
+  "products": [
+    {
+      "name": "Laptop Pro",
+      "description": "High-performance laptop for professionals",
+      "price": 1500,
+      "category": "Electronics"
+    },
+    {
+      "name": "Smartphone X",
+      "description": "Latest smartphone with advanced features",
+      "price": 1000,
+      "category": "Electronics"
+    },
+    {
+      "name": "Gaming Chair",
+      "description": "Comfortable chair for gaming enthusiasts",
+      "price": 300,
+      "category": "Furniture"
+    },
+    {
+      "name": "Wireless Earbuds",
+      "description": "Compact and high-quality audio device",
+      "price": 150,
+      "category": "Accessories"
+    },
+    {
+      "name": "Mechanical Keyboard",
+      "description": "Durable keyboard for typing and gaming",
+      "price": 100,
+      "category": "Accessories"
+    }
+  ]
 }
 ```
 
@@ -240,18 +255,19 @@ Retrieve a list of all products, with optional filtering, sorting, and paginatio
 
 #### **Query Parameters**:
 
-| **Parameter**   | **Type**    | **Description**                                                | **Default Value**   | **Required** |
-|-----------------|-------------|----------------------------------------------------------------|---------------------|--------------|
-| `name`          | `string`    | Filter by item name                                            | -                   | No           |
-| `page`          | `integer`   | Current page for pagination                                    | 1                   | No           |
-| `limit`         | `integer`   | Number of items per page                                       | 10                  | No           |
-| `minPrice`      | `integer`   | Minimum price for filtering                                    | -                   | No           |
-| `maxPrice`      | `integer`   | Maximum price for filtering                                    | -                   | No           |
-| `category`      | `string`    | Filter by item category                                        | -                   | No           |
-| `sortBy`        | `string`    | Field by which to sort the items (`name`, `category`, `price`) | `name`            | No           |
-| `sortOrder`     | `string`    | Sort order of the items (`asc`, `desc`)                        | `asc`               | No           |
+| **Parameter** | **Type**  | **Description**                                                | **Default Value** | **Required** |
+| ------------- | --------- | -------------------------------------------------------------- | ----------------- | ------------ |
+| `name`        | `string`  | Filter by item name                                            | -                 | No           |
+| `page`        | `integer` | Current page for pagination                                    | 1                 | No           |
+| `limit`       | `integer` | Number of items per page                                       | 10                | No           |
+| `minPrice`    | `integer` | Minimum price for filtering                                    | -                 | No           |
+| `maxPrice`    | `integer` | Maximum price for filtering                                    | -                 | No           |
+| `category`    | `string`  | Filter by item category                                        | -                 | No           |
+| `sortBy`      | `string`  | Field by which to sort the items (`name`, `category`, `price`) | `name`            | No           |
+| `sortOrder`   | `string`  | Sort order of the items (`asc`, `desc`)                        | `asc`             | No           |
 
 ##### **Rquest Example**:
+
 ```bash
 GET /products?page=1&limit=10&category=Accessories&sortBy=price&sortOrder=asc
 ```
@@ -292,6 +308,7 @@ A paginated list of products based on the provided query parameters.
 
 - **Code**: `200 OK`
 - **Content**:
+
 ```json
 {
   "statusCode": 400,
@@ -309,14 +326,13 @@ A paginated list of products based on the provided query parameters.
 
 ```json
 {
-  "data":
-    {
-      "id": "1",
-      "name": "Mechanical Keyboard",
-      "description": "Durable keyboard for typing and gaming",
-      "price": 100,
-      "category": "Accessories"
-    }
+  "data": {
+    "id": "1",
+    "name": "Mechanical Keyboard",
+    "description": "Durable keyboard for typing and gaming",
+    "price": 100,
+    "category": "Accessories"
+  }
 }
 ```
 
@@ -333,38 +349,44 @@ A paginated list of products based on the provided query parameters.
   "price": 120
 }
 ```
+
 ##### **Success Response**:
 
 - Code: 200 OK
 - Content:
+
 ```json
 {
-  "data":
-    {
-      "id": "1",
-      "name": "Mechanical Keyboard",
-      "description": "Durable keyboard for typing and gaming",
-      "price": 100,
-      "category": "Accessories"
-    }
+  "data": {
+    "id": "1",
+    "name": "Mechanical Keyboard",
+    "description": "Durable keyboard for typing and gaming",
+    "price": 100,
+    "category": "Accessories"
+  }
 }
 ```
+
 ### 6. **Delete Product**
+
 - **URL**: `/products/:id`
 - **Method**: `DELETE`
 - **Description**: Delete a product by its id.
 - **Request Body**:
-Endpoint: DELETE /products/:id
-Delete a product by its ID.
+  Endpoint: DELETE /products/:id
+  Delete a product by its ID.
 
 ##### **Success Response**:
+
 - Code: 200 OK
 - Content:
+
 ```json
 {
-    "response": "Successfully deleting product with ID 676e581573836df47bc1ef03"
+  "response": "Successfully deleting product with ID 676e581573836df47bc1ef03"
 }
 ```
+
 ### 7. Get Total Report
 
 Retrieve the total count of products, optionally filtered by category.
@@ -375,9 +397,9 @@ Retrieve the total count of products, optionally filtered by category.
 
 #### Query Parameters
 
-| Parameter | Type   | Required | Description                       |
-|-----------|--------|----------|-----------------------------------|
-| category  | string | No       | Filter by product category.       |
+| Parameter | Type   | Required | Description                 |
+| --------- | ------ | -------- | --------------------------- |
+| category  | string | No       | Filter by product category. |
 
 #### Request Example
 
@@ -386,8 +408,10 @@ GET /api/v1/products/report/total?category=Accessories
 ```
 
 ##### **Success Response**:
+
 - **Status Code**: 200 OK
 - **Body**:
+
 ```json
 {
   "count": 50,
@@ -408,9 +432,106 @@ Retrieve the average price of products in each category along with the count of 
 ```http
 GET /api/v1/products/report/average
 ```
+
 ##### **Success Response**:
+
 - **Status Code**: 200 OK
 - **Body**:
+
+```json
+[
+  {
+    "category": "Accessories",
+    "averagePrice": 50,
+    "count": 10
+  },
+  {
+    "category": "Electronics",
+    "averagePrice": 300,
+    "count": 20
+  }
+]
+```
+
+### 9. Get Price Report
+
+Retrieve the highest and lowest price products in the database, optionally filtered by category.
+
+#### Endpoint
+
+- **GET** `/api/v1/products/price-report`
+
+#### Query Parameters
+
+| Parameter  | Type   | Required | Description                    |
+| ---------- | ------ | -------- | ------------------------------ |
+| `category` | string | No       | Optional category to filter by |
+
+#### Request Example
+
+```http
+GET /api/v1/products/price-report?category=Electronics
+```
+
+##### **Success Response**:
+
+- **Status Code**: 200 OK
+- **Body**:
+
+```json
+{
+  "data": {
+    "category": "Accessories",
+    "products": {
+      "highest": {
+        "_id": "676e581573836df47bc1eeff",
+        "name": "Laptop Pro",
+        "description": "High-performance laptop for professionals",
+        "price": 1500,
+        "category": "Electronics",
+        "__v": 0
+      },
+      "lowest": {
+        "_id": "676e581573836df47bc1ef02",
+        "name": "Wireless Earbuds",
+        "description": "Compact and high-quality audio device",
+        "price": 150,
+        "category": "Accessories",
+        "__v": 0
+      }
+    }
+  }
+}
+```
+
+### 10. Search Products
+
+Search for products using Elasticsearch with filters for term, category, and price range.
+
+#### Endpoint
+
+- **GET** `/api/v1/products/search`
+
+#### Request Parameters
+
+| Parameter  | Type   | Required | Description                                 |
+| ---------- | ------ | -------- | ------------------------------------------- |
+| `term`     | string | No       | Search term for product name or description |
+| `category` | string | No       | Category of the product                     |
+| `minPrice` | number | No       | Minimum price of the product                |
+| `maxPrice` | number | No       | Maximum price of the product                |
+
+#### Request Example
+
+```http
+GET /api/v1/products/search?term=laptop&category=Electronics&minPrice=100&maxPrice=1500
+```
+
+##### **Success Response**:
+
+- **Status Code**: 200 OK
+- **Body**:
+
 ```json
 [
   {
@@ -430,7 +551,7 @@ GET /api/v1/products/report/average
 
 ### Prerequisites
 
-- Install **Docker** and **Docker Compose** on your system.
+- Install **Docker Desktop** on your system.
 - Ensure ports `3000` (app), `9200` (Elasticsearch), and `27017` (MongoDB) are available.
 
 ---
@@ -445,6 +566,7 @@ cd <repository_name>
 ```
 
 2. **Set Up Environment Variable**:
+
 - Create an .env file in the project root and provide the necessary environment variables. Example:
 
 ```env
@@ -456,7 +578,9 @@ DB_PASSWORD=12345
 API_BASE_PATH=api
 API_VERSION_PREFIX=v1
 ```
+
 3. **Run Docker Compose**:
+
 - Build and start the containers:
 
 ```bash
@@ -470,13 +594,16 @@ docker-compose up --build
 - Elasticsearch: Navigate to http://localhost:9200.
 - Kibana: Navigate to http://localhost:5601.
 
-
 ## Example Docker Compose Commands
+
 - Run the services with build:
+
 ```bash
 docker-compose up --build -d
 ```
+
 - Stop the running containers:
+
 ```bash
 docker-compose down
 ```
