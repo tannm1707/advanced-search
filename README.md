@@ -6,10 +6,11 @@
 - Searching Product with Elasticsearch
 - Sync Post, Update, Delete in CRUD with Elasticsearch indexing
 - Creating API Swagger Document
-- Data report: Total product report, Average price report
-  **Not Done**:
-- Sync data from MongoDB to Elasticsearch ( tried using monstache but still cannot make it work )
+- Data report: Total product report, Average price report, Lowest and Highest product report ( all done in mongoose)
 
+**Not Done**:
+- Sync data from MongoDB to Elasticsearch ( tried using monstache but still cannot make it work )
+- Apply elasticsearch for getting data report
 ---
 
 <p align="center">
